@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-label="fe-toolkits logo">
+  <rect width="40" height="40" rx="6" fill="#087e8b"/>
+  <path d="M10 11h20v5H16v4h11v5H16v7h-6V11Z" fill="#fff"/>
+  <rect x="27" y="25" width="5" height="7" fill="#ff5a5f"/>
+</svg>

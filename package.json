@@ -1,0 +1,31 @@
+{
+  "name": "fe-toolkits-workspace",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@11.3.0",
+  "scripts": {
+    "dev": "pnpm --filter docs dev",
+    "build": "pnpm --filter fe-toolkits build && pnpm --filter docs build",
+    "build:docs": "pnpm --filter docs build",
+    "preview:docs": "pnpm --filter docs preview",
+    "test": "pnpm --filter fe-toolkits test",
+    "test:watch": "pnpm --filter fe-toolkits test:watch",
+    "lint": "eslint .",
+    "typecheck": "node ./node_modules/typescript/bin/tsc -b",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^9.3.0",
+    "@changesets/cli": "^2.27.12",
+    "@types/node": "^22.10.5",
+    "eslint": "^10.8.0",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vite-plugin-dts": "^4.3.0",
+    "vitepress": "^1.6.4",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "references": [
+    { "path": "./packages/fe-toolkits/tsconfig.json" },
+    { "path": "./apps/docs/tsconfig.json" }
+  ],
+  "files": []
+}

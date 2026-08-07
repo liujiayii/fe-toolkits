@@ -1,0 +1,13 @@
+# 最新 Antfu 及其兼容性数据依赖已人工确认，保留其余依赖的发布时间保护。
+minimumReleaseAgeExclude:
+  - '@antfu/eslint-config'
+  - core-js-compat
+  - electron-to-chromium
+  - node-releases
+
+packages:
+  - 'packages/*'
+  - 'apps/*'
+
+allowBuilds:
+  esbuild: true

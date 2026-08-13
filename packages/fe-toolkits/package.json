@@ -2,7 +2,7 @@
   "name": "fe-toolkits",
   "type": "module",
   "version": "0.1.0",
-  "description": "TypeScript regular expressions and masking utilities",
+  "description": "TypeScript 前端通用工具箱：正则校验与脱敏、日期、URL、字符串、数字、错误归一化",
   "license": "MIT",
   "sideEffects": false,
   "exports": {
@@ -10,9 +10,25 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./date": {
+      "types": "./dist/date.d.ts",
+      "import": "./dist/date.js"
+    },
+    "./error": {
+      "types": "./dist/error.d.ts",
+      "import": "./dist/error.js"
+    },
+    "./number": {
+      "types": "./dist/number.d.ts",
+      "import": "./dist/number.js"
+    },
     "./regex": {
       "types": "./dist/regex.d.ts",
       "import": "./dist/regex.js"
+    },
+    "./url": {
+      "types": "./dist/url.d.ts",
+      "import": "./dist/url.js"
     },
     "./package.json": "./package.json"
   },
@@ -24,5 +40,16 @@
     "build": "vite build",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "dayjs": "^1.11.0"
+  },
+  "peerDependenciesMeta": {
+    "dayjs": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "dayjs": "^1.11.21"
   }
 }

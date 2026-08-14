@@ -1,7 +1,7 @@
 {
   "name": "fe-toolkits",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeScript 前端通用工具箱：正则校验与脱敏、日期、URL、字符串、数字、错误归一化",
   "license": "MIT",
   "sideEffects": false,

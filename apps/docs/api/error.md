@@ -33,7 +33,10 @@ normalizeErrorInfo(undefined) // message: 'undefined'
 normalizeErrorInfo(null) // message: 'null'
 ```
 
-直接对这些值读 `.message` / `.stack` 会拿到 `undefined`，上报到监控平台就变成一条无法定位的空记录。
+直接读取这些值的属性行为并不一致：
+对 `null` / `undefined` 读 `.message` / `.stack` 会**抛 `TypeError`**；
+对字符串、数字、普通对象这类「属性不存在」的值，读取结果则是 `undefined`。
+不管哪种情况，上报到监控平台都会变成一条无法定位的空记录或直接抛错中断。
 归一化之后可以放心地喂给上报通道：
 
 ```ts

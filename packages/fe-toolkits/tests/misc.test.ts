@@ -92,6 +92,28 @@ describe('moneyToFixed', () => {
     expect(moneyToFixed(Infinity)).toBe(0)
     expect(moneyToFixed(-Infinity)).toBe(0)
   })
+
+  it('rounds decimal boundaries correctly (no float pitfalls)', () => {
+    // 10.075 旧实现会被算成 10.07，应为 10.08
+    expect(moneyToFixed(10.075, 2)).toBe(10.08)
+    expect(moneyToFixed(1.005, 2)).toBe(1.01)
+    expect(moneyToFixed(0.125, 2)).toBe(0.13)
+    expect(moneyToFixed(0.135, 2)).toBe(0.14)
+  })
+
+  it('rounds negative values symmetrically', () => {
+    // Math.round 对负数向 +∞ 取整会踩坑，这里需与正数对称
+    expect(moneyToFixed(-1.005, 2)).toBe(-1.01)
+    expect(moneyToFixed(-10.075, 2)).toBe(-10.08)
+    expect(moneyToFixed(-0.125, 2)).toBe(-0.13)
+  })
+
+  it('falls back to default precision for invalid decimal', () => {
+    expect(moneyToFixed(1.2345, NaN)).toBe(1.23)
+    expect(moneyToFixed(1.2345, -1)).toBe(1.23)
+    expect(moneyToFixed(1.2345, 999)).toBe(1.23)
+    expect(moneyToFixed(1.2345, 1.5)).toBe(1.23)
+  })
 })
 
 describe('formatDistance', () => {
@@ -109,12 +131,24 @@ describe('formatDistance', () => {
     expect(formatDistance(500, { prefix: '距您直线' })).toBe('距您直线500米')
     expect(formatDistance(1500, { prefix: '距您直线' })).toBe('距您直线1.5公里')
     expect(formatDistance(1500, { kilometerUnit: 'km', precision: 2 })).toBe('1.50km')
-    expect(formatDistance(800, { threshold: 500, precision: 1 })).toBe('1.6公里')
+    // 阈值仅决定何时切换到公里；公里结果固定除以 1000，与阈值解耦
+    expect(formatDistance(800, { threshold: 500, precision: 1 })).toBe('0.8公里')
   })
 
   it('returns empty string for negative or NaN', () => {
     expect(formatDistance(-100)).toBe('')
     expect(formatDistance(NaN)).toBe('')
     expect(formatDistance(Infinity)).toBe('')
+  })
+
+  it('falls back to safe config for invalid threshold or precision', () => {
+    // 非法 threshold 回退 1000，800 仍按米计
+    expect(formatDistance(800, { threshold: NaN })).toBe('800米')
+    expect(formatDistance(800, { threshold: -1 })).toBe('800米')
+    // 非法 precision 回退 1，不抛异常也不出 NaN
+    expect(formatDistance(1500, { precision: NaN })).toBe('1.5公里')
+    expect(formatDistance(1500, { precision: 999 })).toBe('1.5公里')
+    expect(formatDistance(1500, { precision: -1 })).toBe('1.5公里')
+    expect(formatDistance(1500, { precision: 1.5 })).toBe('1.5公里')
   })
 })

@@ -21,11 +21,20 @@ safeDecode('100%off') // '100%off'
 safeDecode('%E4%B8') // '%E4%B8'
 ```
 
-典型用法是解析地址栏参数：
+典型用法是解析地址栏参数。注意 `URLSearchParams.get` 已经做过一次解码，
+再套 `safeDecode` 属于二次解码——除非你确实需要这个行为，否则不要重复解码：
 
 ```ts
 const raw = new URLSearchParams(location.search).get('redirect') ?? ''
 const redirect = safeDecode(raw)
 
-location.assign(redirect)
+// ❌ 危险：解码后直接 assign，可能被恶意构造的 URL 实现开放重定向
+// location.assign(redirect)
+
+// ✅ 安全：跳转前校验协议为 http/https，且目标同源或命中白名单
+const url = new URL(redirect, location.origin)
+const isAllowed = (url.protocol === 'http:' || url.protocol === 'https:')
+  && (url.origin === location.origin || ALLOWED_REDIRECT_HOSTS.has(url.host))
+if (isAllowed)
+  location.assign(redirect)
 ```

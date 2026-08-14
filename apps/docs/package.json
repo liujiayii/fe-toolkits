@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "fe-toolkits": "workspace:*"
+  },
+  "devDependencies": {
+    "dayjs": "^1.11.21"
   }
 }

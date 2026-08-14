@@ -8,7 +8,7 @@ const docsBase = env.DOCS_BASE ?? '/'
 export default defineConfig({
   base: docsBase,
   title: 'fe-toolkits',
-  description: 'TypeScript 正则表达式与数据脱敏工具库',
+  description: 'TypeScript 前端通用工具箱：正则校验与脱敏、日期、URL、数字、错误归一化',
   lang: 'zh-CN',
   cleanUrls: true,
   themeConfig: {
@@ -30,6 +30,10 @@ export default defineConfig({
         items: [
           { text: '模块索引', link: '/api/' },
           { text: '正则与脱敏', link: '/api/regex' },
+          { text: '日期与日历', link: '/api/date' },
+          { text: 'URL 处理', link: '/api/url' },
+          { text: '数字与格式化', link: '/api/number' },
+          { text: '错误归一化', link: '/api/error' },
         ],
       },
     ],

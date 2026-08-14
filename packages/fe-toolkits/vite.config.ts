@@ -21,12 +21,18 @@ export default defineConfig({
     lib: {
       entry: {
         index: resolve(projectRoot, 'src/index.ts'),
+        date: resolve(projectRoot, 'src/date/index.ts'),
+        error: resolve(projectRoot, 'src/error/index.ts'),
+        number: resolve(projectRoot, 'src/number/index.ts'),
         regex: resolve(projectRoot, 'src/regex/index.ts'),
+        url: resolve(projectRoot, 'src/url/index.ts'),
       },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
+      // dayjs 是 date 子路径的 peer 依赖，不要打进产物
+      external: ['dayjs', /^dayjs\//],
       output: {
         exports: 'named',
       },

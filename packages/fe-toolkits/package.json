@@ -4,6 +4,10 @@
   "version": "0.2.2",
   "description": "TypeScript 前端通用工具箱：正则校验与脱敏、日期、URL、字符串、数字、错误归一化",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liujiayii/fe-toolkits"
+  },
   "sideEffects": false,
   "exports": {
     ".": {

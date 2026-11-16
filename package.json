@@ -2,7 +2,7 @@
   "name": "fe-toolkits-workspace",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@11.3.0",
+  "packageManager": "pnpm@12.16.1",
   "scripts": {
     "dev": "pnpm --filter docs dev",
     "build": "pnpm --filter fe-toolkits build && pnpm --filter docs build",

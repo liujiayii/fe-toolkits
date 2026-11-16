@@ -31,8 +31,8 @@ export default defineConfig({
       fileName: (_format, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
-      // dayjs 是 date 子路径的 peer 依赖，不要打进产物
-      external: ['dayjs', /^dayjs\//],
+      // dayjs 是 date 子路径的 peer 依赖，es-toolkit 是普通依赖，都不打进产物
+      external: ['dayjs', /^dayjs\//, 'es-toolkit', /^es-toolkit\//],
       output: {
         exports: 'named',
       },

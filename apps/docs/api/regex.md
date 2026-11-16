@@ -27,36 +27,41 @@ import { isValidIdCard } from 'fe-toolkits/regex'
 
 isValidIdCard('11010519491231002X') // true
 isValidIdCard('110105194912310021') // false
+isValidIdCard(undefined) // false，不会抛错
 ```
 
 ## maskPhoneNumber
 
-将合法手机号的中间四位替换为 `****`，格式不匹配时原样返回。
+将合法手机号的中间四位替换为 `****`，格式不匹配时原样返回。输入会先经 `toString` 归一化：`null`/`undefined` 得到空串，数字等其他类型先转为字符串。
 
 ```ts
 import { maskPhoneNumber } from 'fe-toolkits/regex'
 
 maskPhoneNumber('13812345678') // '138****5678'
 maskPhoneNumber('1381234567') // '1381234567'
+maskPhoneNumber(13812345678) // '138****5678'
+maskPhoneNumber(undefined) // ''
 ```
 
 ## maskIdCard
 
-将通过 `isValidIdCard` 完整校验的身份证号脱敏，仅保留前三位和后四位。
+将通过 `isValidIdCard` 完整校验的身份证号脱敏，仅保留前三位和后四位。输入会先经 `toString` 归一化，`null`/`undefined` 返回空串。
 
 ```ts
 import { maskIdCard } from 'fe-toolkits/regex'
 
 maskIdCard('11010519491231002X') // '110****002X'
+maskIdCard(undefined) // ''
 ```
 
 ## maskEmail
 
-保留邮箱用户名首尾字符及完整域名，并将用户名中间部分替换为 `****`。单字符用户名保持不变，格式异常时原样返回。
+保留邮箱用户名首尾字符及完整域名，并将用户名中间部分替换为 `****`。单字符用户名保持不变，格式异常时原样返回。输入会先经 `toString` 归一化，`null`/`undefined` 返回空串。
 
 ```ts
 import { maskEmail } from 'fe-toolkits/regex'
 
 maskEmail('developer@example.com') // 'd****r@example.com'
 maskEmail('a@example.com') // 'a@example.com'
+maskEmail(undefined) // ''
 ```

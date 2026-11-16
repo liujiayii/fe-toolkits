@@ -30,4 +30,10 @@ describe('getDateSideLabel', () => {
       weekLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     })).toBe('Thu')
   })
+
+  it('returns empty string for missing dates', () => {
+    // dayjs(undefined) 会回退为当前时间，必须返回空串而不是“今天”
+    expect(getDateSideLabel(undefined as unknown as string)).toBe('')
+    expect(getDateSideLabel(null as unknown as string)).toBe('')
+  })
 })

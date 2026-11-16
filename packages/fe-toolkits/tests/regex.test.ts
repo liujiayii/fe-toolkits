@@ -56,12 +56,39 @@ describe('masking utilities', () => {
     expect(maskPhoneNumber('')).toBe('')
   })
 
+  it('returns empty string for nullish phone input', () => {
+    // 原始 bug：undefined 直接调用 replace 抛 TypeError
+    expect(maskPhoneNumber(undefined as unknown as string)).toBe('')
+    expect(maskPhoneNumber(null as unknown as string)).toBe('')
+  })
+
+  it('coerces other non-string phone input via toString without throwing', () => {
+    // 强转语义对照表：所有非字符串输入都不会抛错，按 toString 结果处理
+    expect(maskPhoneNumber(13812345678 as unknown as string)).toBe('138****5678')
+    expect(maskPhoneNumber(NaN as unknown as string)).toBe('NaN')
+    expect(maskPhoneNumber(Infinity as unknown as string)).toBe('Infinity')
+    expect(maskPhoneNumber(0 as unknown as string)).toBe('0')
+    expect(maskPhoneNumber(false as unknown as string)).toBe('false')
+    expect(maskPhoneNumber({} as unknown as string)).toBe('[object Object]')
+    expect(maskPhoneNumber([] as unknown as string)).toBe('')
+    expect(maskPhoneNumber([13812345678] as unknown as string)).toBe('138****5678')
+    expect(maskPhoneNumber(Symbol('id') as unknown as string)).toBe('Symbol(id)')
+  })
+
   it('masks valid ID cards and preserves invalid input', () => {
     expect(maskIdCard('11010519491231002X')).toBe('110****002X')
     expect(maskIdCard('110105491231002')).toBe('110****1002')
     expect(maskIdCard('110105194912310021')).toBe('110105194912310021')
     expect(maskIdCard('invalid')).toBe('invalid')
     expect(maskIdCard('')).toBe('')
+  })
+
+  it('coerces non-string ID card input via toString', () => {
+    expect(maskIdCard(undefined as unknown as string)).toBe('')
+    expect(maskIdCard(null as unknown as string)).toBe('')
+    expect(maskIdCard(110105491231002 as unknown as string)).toBe('110****1002')
+    expect(isValidIdCard(undefined as unknown as string)).toBe(false)
+    expect(isValidIdCard(null as unknown as string)).toBe(false)
   })
 
   it('masks email usernames without producing invalid fragments', () => {
@@ -72,5 +99,11 @@ describe('masking utilities', () => {
     expect(maskEmail('@example.com')).toBe('@example.com')
     expect(maskEmail('user@')).toBe('user@')
     expect(maskEmail('')).toBe('')
+  })
+
+  it('coerces non-string email input via toString', () => {
+    expect(maskEmail(undefined as unknown as string)).toBe('')
+    expect(maskEmail(null as unknown as string)).toBe('')
+    expect(maskEmail(123 as unknown as string)).toBe('123')
   })
 })

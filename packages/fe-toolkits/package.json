@@ -51,6 +51,9 @@
       "optional": true
     }
   },
+  "dependencies": {
+    "es-toolkit": "^1.53.2"
+  },
   "devDependencies": {
     "dayjs": "^1.11.21"
   }

@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 // 不依赖宿主项目是否 extend 过。
 import isToday from 'dayjs/plugin/isToday'
 import isTomorrow from 'dayjs/plugin/isTomorrow'
+import { isNil } from 'es-toolkit'
 
 dayjs.extend(isToday)
 dayjs.extend(isTomorrow)
@@ -20,12 +21,17 @@ export interface DateSideLabelOptions {
   weekLabels?: readonly string[]
 }
 
-/** 生成日期标签：今天 / 明天 / 周X。 */
+/** 生成日期标签：今天 / 明天 / 周X，日期缺省或无法解析时返回空串。 */
 export function getDateSideLabel(
   date: string | number | Date,
   options: DateSideLabelOptions = {},
 ): string {
   const { today = '今天', tomorrow = '明天', weekLabels = weekLabelMap } = options
+
+  // dayjs(undefined) 会回退为当前时间，导致缺数时被误判为“今天”，需显式拦截；
+  // 这里只判空不强转——Date/number 是合法入参，toString 会破坏 dayjs 解析
+  if (isNil(date))
+    return ''
 
   const target = dayjs(date)
   if (target.isToday())

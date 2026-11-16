@@ -1,3 +1,5 @@
+import { toString } from 'es-toolkit/compat'
+
 import { ID_CARD_REGEX } from './patterns.js'
 
 const ID_CARD_WEIGHTS = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2] as const
@@ -18,9 +20,10 @@ function isValidIdCardBirthDate(idCard: string): boolean {
     && birthDate <= today
 }
 
-/** 校验中国大陆身份证的格式、出生日期以及 18 位号码的校验码。 */
+/** 校验中国大陆身份证的格式、出生日期以及 18 位号码的校验码，非法输入判定为无效。 */
 export function isValidIdCard(idCard: string): boolean {
-  const normalizedIdCard = idCard.toUpperCase()
+  // toString 归一化后 null/undefined 变空串，正则校验自然失败，无需单独判空
+  const normalizedIdCard = toString(idCard).toUpperCase()
   if (!ID_CARD_REGEX.test(normalizedIdCard) || !isValidIdCardBirthDate(normalizedIdCard))
     return false
 

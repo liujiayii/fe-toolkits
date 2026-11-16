@@ -14,7 +14,7 @@ pnpm add dayjs
 
 ## getDateSideLabel
 
-生成日期标签：今天 / 明天 / 周X。
+生成日期标签：今天 / 明天 / 周X。日期缺省或无法解析时返回空串。
 
 ```ts
 import { getDateSideLabel, weekLabelMap } from 'fe-toolkits/date'
@@ -22,6 +22,7 @@ import { getDateSideLabel, weekLabelMap } from 'fe-toolkits/date'
 getDateSideLabel('2026-03-10') // '今天'（假设今天是 2026-03-10）
 getDateSideLabel('2026-03-11') // '明天'
 getDateSideLabel('2026-03-12') // '周四'
+getDateSideLabel(undefined) // ''，不会误判为“今天”
 
 weekLabelMap // ['周日', '周一', ..., '周六']，索引与 Date#getDay 一致
 ```

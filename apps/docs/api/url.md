@@ -2,7 +2,7 @@
 
 ## safeDecode
 
-安全解码 URI 组件，遇到非法转义序列时返回原字符串而不抛错。
+安全解码 URI 组件，输入先经 `toString` 归一化（`null`/`undefined` 得到空串），遇到非法转义序列时返回原字符串而不抛错。
 
 ```ts
 import { safeDecode } from 'fe-toolkits/url'

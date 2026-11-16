@@ -17,6 +17,11 @@ describe('safeDecode', () => {
     expect(safeDecode('100%off')).toBe('100%off')
     expect(safeDecode('%E4%B8')).toBe('%E4%B8')
   })
+
+  it('returns empty string for non-string input', () => {
+    expect(safeDecode(undefined as unknown as string)).toBe('')
+    expect(safeDecode(null as unknown as string)).toBe('')
+  })
 })
 
 describe('normalizeErrorInfo', () => {

@@ -8,9 +8,9 @@
 | `fe-toolkits/number` | 数字与格式化 | `moneyToFixed`、`formatDistance` |
 | `fe-toolkits/error` | 错误归一化 | `normalizeErrorInfo` |
 
-## 根入口只汇总零依赖模块
+## 根入口只汇总无 peer 依赖的模块
 
-`regex` / `url` / `number` / `error` 同时由根入口 `fe-toolkits` 导出：
+`regex` / `url` / `number` / `error` 同时由根入口 `fe-toolkits` 导出。这些模块引用的 `es-toolkit` 是包的普通依赖，会随安装自动带上，因此根入口仍不需要任何 peer 依赖：
 
 ```ts
 import { maskPhoneNumber, moneyToFixed, safeDecode } from 'fe-toolkits'
